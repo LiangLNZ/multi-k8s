@@ -8,7 +8,7 @@ before_install:
   - docker build -t dancingdumpling/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run -r CI=true dancingdumpling/react-test npm run test 
+  - docker run -e CI=true dancingdumpling/react-test npm run test 
 
 after_success:
   - docker build -t dancingdumpling/multi-client ./client
