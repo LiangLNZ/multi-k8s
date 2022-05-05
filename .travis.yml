@@ -30,7 +30,5 @@ after_success:
     env: "Multidocker-env"
     bucket_name: "elasticbeanstalk-ap-southeast-2-496472651608"
     bucket_path: "multi-docker"
-    access_key_id:
-      secure: $AWS_ACCESS_KEY
-    secret_access_key:
-      secure: $AWS_SECRET_KEY
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
