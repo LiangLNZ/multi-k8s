@@ -3,9 +3,13 @@ services:
   client: 
     image: "dancingdumpling/multi-client"
     mem_limit: 128m
+    #giving the host name the aws is using this to create a new hostname and can access 
+    #by other container that was created by docker compose 
+    hostname: client
   api:
     image: "dancingdumpling/multi-server"
     mem_limit: 128m
+    hostname: api
     environment:
     # get it from aws elastiCache redis link and it defined in elastic beanstalk - configuration - software - environment properties
       - REDIS_HOST=$REDIS_HOST 
@@ -18,11 +22,13 @@ services:
   worker:
     image: "dancingdumpling/multi-worker"
     mem_limit: 128m
+    hostname: worker
     environment:
       - REDIS_HOST=$REDIS_HOST
       - REDIS_PORT=$REDIS_PORT
   nginx:
     image: "dancingdumpling/multi-nginx"
     mem_limit: 128m
+    hostname: nginx
     ports:
       - "80:80"
