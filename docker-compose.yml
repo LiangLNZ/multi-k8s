@@ -1,13 +1,13 @@
 version: '3'
 services:
   client: 
-    image: "dancingdumpling/multi-client"
+    image: "cygnetops/multi-client-10-14"
     mem_limit: 128m
     #giving the host name the aws is using this to create a new hostname and can access 
     #by other container that was created by docker compose 
     hostname: client
   api:
-    image: "dancingdumpling/multi-server"
+    image: "cygnetops/multi-server-10-14"
     mem_limit: 128m
     hostname: api
     environment:
@@ -20,14 +20,14 @@ services:
       - PGPASSWORD=$PGPASSWORD
       - PGPORT=$PGPORT
   worker:
-    image: "dancingdumpling/multi-worker"
+    image: "cygnetops/multi-worker-10-14"
     mem_limit: 128m
     hostname: worker
     environment:
       - REDIS_HOST=$REDIS_HOST
       - REDIS_PORT=$REDIS_PORT
   nginx:
-    image: "dancingdumpling/multi-nginx"
+    image: "cygnetops/multi-nginx-10-14"
     mem_limit: 128m
     hostname: nginx
     ports:
