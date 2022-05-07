@@ -27,9 +27,9 @@ deploy:
   provider: elasticbeanstalk
   region: "ap-southeast-2"
   app: "multi-docker"
-  env: "Multidocker-env"
+  env: "Multidocker-env-1"
   bucket_name: "elasticbeanstalk-ap-southeast-2-496472651608"
-  bucket_path: "multi-docker"
+  bucket_path: "multi-docker-1"
   on:
     branch: master
   access_key_id: $AWS_ACCESS_KEY
