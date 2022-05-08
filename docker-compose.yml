@@ -1,7 +1,7 @@
 version: '3'
 services:
   client: 
-    image: "cygnetops/multi-client-10-14"
+    image: "dancingdumpling/multi-client"
     mem_limit: 128m
     #giving the host name the aws is using this to create a new hostname and can access 
     #by other container that was created by docker compose 
