@@ -27,12 +27,10 @@ jobs:
           docker build -t dancingdumpling/react-test -f ./client/Dockerfile.dev ./client
           docker run -e CI=true dancingdumpling/react-test npm test
       
-      #https://github.com/google-github-actions/auth#setting-up-workload-identity-federation
-      - name: Set Identity Provider 
+      - name: Set Service Key
         uses: 'google-github-actions/auth@v0'
         with:
-          workload_identity_provider: 'projects/580733139848/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
-          service_account: 'github-action-deployer@multi-k8s-352603.iam.gserviceaccount.com'
+          credentials_json: '${{ secrets.GKE_SA_KEY }}'
 
       - name: Set Project 
         uses: google-github-actions/setup-gcloud@v0
