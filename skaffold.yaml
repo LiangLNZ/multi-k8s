@@ -1,0 +1,49 @@
+apiVersion: skaffold/v2beta28
+kind: Config
+build:
+  #for local develpment, 
+  #we don't want it push the image to docker hub
+  local: 
+    push: false 
+  artifacts:
+    - image: dancingdumpling/multi-client
+      context: client 
+      docker:
+        dockerfile: Dockerfile.dev
+      #synced to pods instead of triggering an image build when modified.
+      sync:
+        manual: 
+          - src: "src/**/*.js"
+            dest: .
+          - src: "src/**/*.css"
+            dest: . 
+          - src: "src/**/*.html"
+            dest: .
+    - image: dancingdumpling/multi-server
+      context: server
+      docker:
+        dockerfile: Dockerfile.dev
+      sync:
+        manual:
+          - src: "**/*.js"
+            dest: .
+    - image: dancingdumpling/multi-worker
+      context: worker
+      docker:
+        dockerfile: Dockerfile.dev
+      sync:
+        manual:
+          - src: "**/*.js"
+            dest: . 
+deploy:
+  kubectl:
+    manifests:
+      # when exit skaffold, it will delete following pods and services
+      # but we don;t want to delete the persistence data like db 
+      - ./k8s/client-deployment.yaml
+      - ./k8s/server-deployment.yaml
+      - ./k8s/worker-deployment.yaml
+      - ./k8s/client-cluster-ip-service.yaml 
+      - ./k8s/server-cluster-ip-service.yaml    
+  
+

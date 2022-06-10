@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment #Runs a set of identical pods (one/more)
+metadata:
+  name: client-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      component: web
+  template:
+    metadata: 
+      labels: 
+        component: web
+    spec:
+      containers:
+        - name: client
+          image: dancingdumpling/multi-client
+          ports:
+            - containerPort: 3000
+      
