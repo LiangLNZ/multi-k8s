@@ -18,4 +18,4 @@ kubectl apply -f ./k8s
 #rebuild k8s with latest image 
 kubectl set image deployment/client-deployment client=dancingdumpling/multi-client:$SHA
 kubectl set image deployment/server-deployment server=dancingdumpling/multi-server:$SHA
-kubectl set image deployment/worker-deployment dancingdumpling/multi-worker:$SHA
+kubectl set image deployment/worker-deployment worker=dancingdumpling/multi-worker:$SHA
