@@ -48,5 +48,25 @@ jobs:
           location: australia-southeast1-a
       
       - name: Build 
-        run: ./deploy.sh
-        shell: bash
+        run: |-
+          docker build -t dancingdumpling/multi-client:latest -t dancingdumpling/multi-client:${{ env.SHA }} ./client 
+          docker build -t dancingdumpling/multi-server:latest -t dancingdumpling/multi-server:${{ env.SHA }} ./server
+          docker build -t dancingdumpling/multi-worker:latest -t dancingdumpling/multi-worker:${{ env.SHA }} ./worker
+
+      - name: Push 
+        run: |-
+          docker push dancingdumpling/multi-client:latest
+          docker push dancingdumpling/multi-client:${{ env.SHA }}
+
+          docker push dancingdumpling/multi-server:latest
+          docker push dancingdumpling/multi-server:${{ env.SHA }}
+
+          docker push dancingdumpling/multi-worker:latest
+          docker push dancingdumpling/multi-worker:${{ env.SHA }}
+
+      - name: Apply 
+        run: |-
+          kubectl apply -f ./k8s
+          kubectl set image deployment/client-deployment client=dancingdumpling/multi-client:${{ env.SHA }}
+          kubectl set image deployment/server-deployment server=dancingdumpling/multi-server:${{ env.SHA }}
+          kubectl set image deployment/worker-deployment dancingdumpling/multi-worker:${{ env.SHA }}
